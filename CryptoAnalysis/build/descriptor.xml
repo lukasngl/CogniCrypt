@@ -12,6 +12,21 @@
             <useProjectArtifact>true</useProjectArtifact>
             <unpack>true</unpack>
             <scope>runtime</scope>
+            <unpackOptions>
+                <excludes>
+                    <exclude>plugin.properties</exclude>
+                </excludes>
+            </unpackOptions>
         </dependencySet>
     </dependencySets>
+
+    <fileSets>
+        <fileSet>
+            <directory>${project.build.outputDirectory}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>plugin.properties</include>
+            </includes>
+        </fileSet>
+    </fileSets>
 </assembly>
