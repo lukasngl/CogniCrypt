@@ -34,7 +34,6 @@ import soot.Unit;
 import soot.Value;
 import soot.jimple.Stmt;
 import sync.pds.solver.nodes.Node;
-import typestate.finiteautomata.MatcherTransition;
 import wpds.impl.Weight.NoWeight;
 
 public class ExtractParameterAnalysis {
@@ -55,11 +54,11 @@ public class ExtractParameterAnalysis {
 	public ExtractParameterAnalysis(CryptoScanner cryptoScanner, Map<Statement, SootMethod> allCallsOnObject, SootBasedStateMachineGraph fsm) {
 		this.cryptoScanner = cryptoScanner;
 		this.allCallsOnObject = allCallsOnObject;
-		for(MatcherTransition m : fsm.getAllTransitions()) {
-			if(m instanceof LabeledMatcherTransition) {
-				this.events.add((LabeledMatcherTransition) m );
-			}
-		}
+		fsm.getAllTransitions().stream()
+			.filter(m -> m instanceof LabeledMatcherTransition)
+			.map(m -> (LabeledMatcherTransition) m)
+			.filter(LabeledMatcherTransition::isNormalTransition)
+			.forEach(this.events::add);
 	}
 
 	public void run() {
