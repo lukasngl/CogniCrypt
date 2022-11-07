@@ -133,4 +133,10 @@ public class LabeledMatcherTransition extends MatcherTransition {
 	public List<CrySLMethod> label() {
 		return label;
 	}
+
+    public Collection<CrySLMethod> getMatching(SootMethod method) {
+      if(!matches(method))
+				return Collections.emptyList();
+			return CrySLMethodToSootMethod.v().convert(method);
+    }
 }
