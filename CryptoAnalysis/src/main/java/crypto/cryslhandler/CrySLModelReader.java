@@ -155,6 +155,7 @@ public class CrySLModelReader {
 
 		final List<ISLConstraint> constraints = (dm.getReqConstraints() != null) ? buildUpConstraints(dm.getReqConstraints().getReq()) : Lists.newArrayList();
 		constraints.addAll(((dm.getRequire() != null) ? collectRequiredPredicates(dm.getRequire().getPred()) : Lists.newArrayList()));
+		constraints.addAll(ExceptionsReader.getExceptionConstraints(events));
 		final List<Entry<String, String>> objects = getObjects(dm.getUsage());
 		final List<CrySLPredicate> actPreds = Lists.newArrayList();
 

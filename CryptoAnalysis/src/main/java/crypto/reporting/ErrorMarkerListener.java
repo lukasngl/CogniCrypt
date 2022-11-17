@@ -33,6 +33,7 @@ import crypto.analysis.errors.NeverTypeOfError;
 import crypto.analysis.errors.PredicateContradictionError;
 import crypto.analysis.errors.RequiredPredicateError;
 import crypto.analysis.errors.TypestateError;
+import crypto.analysis.errors.UncaughtExceptionError;
 import crypto.extractparameter.CallSiteWithParamIndex;
 import crypto.extractparameter.ExtractedValue;
 import crypto.interfaces.ISLConstraint;
@@ -116,16 +117,19 @@ public class ErrorMarkerListener extends CrySLAnalysisListener {
 			@Override
 			public void visit(PredicateContradictionError predicateContradictionError) {
 				addMarker(predicateContradictionError);
-				
+			}
+
+			@Override
+			public void visit(UncaughtExceptionError uncaughtExceptionError) {
+				addMarker(uncaughtExceptionError);
 			}
 
 			@Override
 			public void visit(HardCodedError hardcodedError) {
 				addMarker(hardcodedError);
-			}});
+			}
+		});
 	}
-	
-
 
 	@Override
 	public void afterAnalysis() {
